@@ -17,4 +17,4 @@ class Choice(models.Model):
     c_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return "{0}. {1}".format(self.c_id, self.choice_text)
+        return "Q#{0}: {1}. {2}".format(self.question.q_id, self.c_id, self.choice_text)
