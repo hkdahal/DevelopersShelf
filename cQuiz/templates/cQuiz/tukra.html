@@ -1,0 +1,29 @@
+{% extends "cQuiz/base.html" %}
+{% load filters %}
+
+{% block qaform %}
+<div class="container">
+
+    <p> Welcome to quiz!</p>
+
+    <form>
+          {% for q in questions %}
+              <fieldset class="form-group">
+                  <legend>{{ q.q_id }}. {{ q.question_text }}</legend>
+                  <label class="radio-inline">
+                      <input type="radio" name="opt-{{ q.q_id }}">Option 1
+                  </label>
+                  <label class="radio-inline">
+                      <input type="radio" name="opt-{{ q.q_id }}"> {{ q|get_choices }}
+                  </label>
+                  <label class="radio-inline">
+                      <input type="radio" name="opt-{{ q.q_id }}">Option 3
+                  </label>
+              </fieldset>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+</div>
+
+{% endblock %}
