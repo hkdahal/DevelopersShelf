@@ -16,14 +16,13 @@ class SongSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    song_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # song_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         fields = (
             'id',
             'movie_id',
             'name',
-            'song_set'
         )
         model = models.Movie
 

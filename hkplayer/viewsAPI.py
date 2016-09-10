@@ -49,9 +49,15 @@ class MovieViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get'])
     def songs(self, request, pk=None):
-        movie = self.get_object()
-        serializer = serializers.SongSerializer(
-            movie.song_set.all(), many=True)
+        self.pagination_class.page_size = 1
+        songs = models.Song.objects.filter(movie_id=pk)
+
+        page = self.paginate_queryset(songs)
+        if page is not None:
+            serializer = serializers.SongSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = serializers.SongSerializer(songs, many=True)
         return Response(serializer.data)
 
 
