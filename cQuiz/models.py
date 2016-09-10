@@ -18,3 +18,4 @@ class Choice(models.Model):
 
     def __str__(self):
         return "Q#{0}: {1}. {2}".format(self.question.q_id, self.c_id, self.choice_text)
+

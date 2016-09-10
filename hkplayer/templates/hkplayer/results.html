@@ -1,0 +1,9 @@
+<h1>{{ movie.name }}</h1>
+
+<ul>
+{% for choice in movie.song_set.all %}
+    <li>{{ choice.title }} -- {{ choice.artists }} </li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'hkplayer:detail' movie.id %}">Vote again?</a>

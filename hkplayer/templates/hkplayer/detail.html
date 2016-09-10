@@ -1,0 +1,14 @@
+<h1>{{ movie.name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!-- form action="" method="post" -->
+{% for choice in movie.song_set.all %}
+    <br>
+    {{ forloop.counter }}. {{ choice.title }}
+    <br>
+    <audio controls>
+      <source src="{{ choice.song_link }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+{% endfor %}
