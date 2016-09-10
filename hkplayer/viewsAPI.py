@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics
+from rest_framework import generics, mixins, viewsets
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
 
 from . import models
 from . import serializers
@@ -39,4 +41,24 @@ class RetrieveUpdateDestroySong(generics.RetrieveUpdateDestroyAPIView):
             movie_id=self.kwargs.get('movie_pk'),
             pk=self.kwargs.get('pk')
         )
+
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = models.Movie.objects.all()
+    serializer_class = serializers.MovieSerializer
+
+    @detail_route(methods=['get'])
+    def songs(self, request, pk=None):
+        movie = self.get_object()
+        serializer = serializers.SongSerializer(
+            movie.song_set.all(), many=True)
+        return Response(serializer.data)
+
+
+class SongViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                  viewsets.GenericViewSet):
+    queryset = models.Song.objects.all()
+    serializer_class = serializers.SongSerializer
+
 
