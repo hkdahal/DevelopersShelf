@@ -1,20 +1,14 @@
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import generics
 
 from . import models
 from . import serializers
 
 
-class ListCreateMovie(APIView):
+class ListCreateMovie(generics.ListCreateAPIView):
+    queryset = models.Movie.objects.all()
+    serializer_class = serializers.MovieSerializer
 
-    def get(self, request, format=None):
-        movies = models.Movie.objects.all()
-        serializer = serializers.MovieSerializer(movies, many=True)
-        return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = serializers.MovieSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+class RetrieveUpdateDestroyMovie(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Movie.objects.all()
+    serializer_class = serializers.MovieSerializer
