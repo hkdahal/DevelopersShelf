@@ -7,7 +7,7 @@ from .models import Question, Choice
 
 
 class IndexView(generic.ListView):
-    template_name = 'cQuiz/cQuizIndex.html'
+    template_name = 'cQuiz/base.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -17,12 +17,12 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = 'cQuiz/detail.html'
+    template_name = 'cQuiz/pieces/detail.html'
 
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = 'cQuiz/results.html'
+    template_name = 'cQuiz/pieces/results.html'
 
 
 def vote(request, question_id):
@@ -31,13 +31,19 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'cQuiz/detail.html', {
+        return render(request, 'cQuiz/pieces/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
     else:
         if selected_choice.correct:
-            return HttpResponseRedirect(reverse('cQuiz:results', args=(question.id,)))
+            return HttpResponseRedirect(reverse('cQuiz:results',
+                                                args=(question.id,)))
+        else:
+            return render(request, 'cQuiz/pieces/detail.html', {
+                'question': question,
+                'error_message': "Wrong Answer, Try again!.",
+            })
 
 
         # selected_choice.votes += 1

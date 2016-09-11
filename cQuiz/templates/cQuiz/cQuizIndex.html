@@ -1,9 +1,31 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'cQuiz:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% load filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ mo_it }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+{% include "cQuiz/pieces/header.html" %}
+
+    <div class="container">
+    <h3>Welcome, new Citizens!</h3>
+    <p>Awesome that you got to this page. A journey starts with a step, and you have started a step. Applaud yourself!</p>
+
+    <a href="{% url 'cQuiz:detail' latest_question_list.0.id %}" class="btn
+    btn-primary"> Start
+        Quiz </a>
+    </div>
+
+</body>
+</html>
+
+
+
+
