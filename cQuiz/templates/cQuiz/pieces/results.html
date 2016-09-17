@@ -4,19 +4,16 @@
 {% block qaform %}
     <div class="container">
 
-        <h1 class="text-info"> Nice Job!</h1>
-        <h3>{{ question.question_text }}</h3>
-        <ul>
+
+        <h1>{{ question.question_text }}</h1>
         {% for choice in question.choice_set.all %}
-            {% if choice.correct %}
-                <li> <b class="text-success"> {{ choice.choice_text }} - Correct </b> </li>
-            {% else %}
-                <li>{{ choice.choice_text }} </li>
-            {% endif %}
-
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" disabled/>
+                {% if choice.correct %}
+                    <label for="choice{{ forloop.counter }}"> <b class="text-success"> {{ choice.choice_text }} - Correct </b> </label><br />
+                {% else %}
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+                {% endif %}
         {% endfor %}
-        </ul>
-
         <a class="btn btn-success" href="{% url 'cQuiz:detail' question.id|decrement_me %}">Next</a>
 
     </div>

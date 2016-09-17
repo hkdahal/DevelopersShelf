@@ -1,5 +1,6 @@
 from django import template
 from cQuiz.models import Choice
+from random import shuffle
 
 register = template.Library()
 
@@ -12,3 +13,10 @@ def get_choices(question):
 @register.filter
 def decrement_me(num):
     return num-1
+
+
+@register.filter
+def randomize_list(choices):
+    lst = [i for i in choices]
+    shuffle(lst)
+    return lst

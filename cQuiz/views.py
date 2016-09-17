@@ -14,10 +14,27 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
+    def get_context_data(self, **kwargs):
+        # calling super
+        context = super(IndexView, self).get_context_data(**kwargs)
+
+        # overriding
+        # can add additional context here
+        context['my_pages'] = ['Do'+str(i) for i in range(3)]
+        return context
+
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'cQuiz/pieces/detail.html'
+
+    def get_context_data(self, **kwargs):
+        # calling super
+        context = super(DetailView, self).get_context_data(**kwargs)
+
+        # overriding
+        # can add additional context here
+        return context
 
 
 class ResultsView(generic.DetailView):
@@ -51,6 +68,9 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
+
+
+
 
 
 
