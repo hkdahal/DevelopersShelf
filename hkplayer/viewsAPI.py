@@ -49,7 +49,7 @@ class MovieViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get'])
     def songs(self, request, pk=None):
-        self.pagination_class.page_size = 1
+        # self.pagination_class.page_size = 1
         songs = models.Song.objects.filter(movie_id=pk)
 
         page = self.paginate_queryset(songs)
